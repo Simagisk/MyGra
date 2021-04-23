@@ -62,10 +62,11 @@
   .suggest .page-list,
   .suggest .page-map {
     position: fixed;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 100%;
+    right: 10%;
+    top: 35%;
+    /* bottom: 0; */
+    width: 50%;
+    height: 50%;
   }
 
   .suggest .page-city,

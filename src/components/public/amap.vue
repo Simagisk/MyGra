@@ -246,6 +246,7 @@ export default {
             content: per, //设置文本标注内容
             direction: 'right' //设置文本标注方位
         });
+      this.map.setFitView();
 
     }
 

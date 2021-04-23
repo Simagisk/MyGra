@@ -1,12 +1,44 @@
 <template>
   <div class="position-page">
     <el-container style="height: 500px; border: 1px solid #eee">
-    <el-aside width="300px" style="background-color: rgb(238, 241, 246)">
+    <el-aside width="300px" style="background-color: rgb(238, 241, 246);height:750px">
         <el-menu :unique-opened='false'>
-        <div v-for="(item,index) in menuList" :key="index">
-            <el-submenu :index="index">
-                <template slot="title"><i class="el-icon-message"></i>约定人{{index+1}}</template>
-                    约定人:
+        <div v-for="(item,index) in menuList" :key="index+''">
+            <el-submenu :index="index+''">
+                <template slot="title"><i class="el-icon-s-custom"></i>约定人{{index+1}}</template>
+                <el-row :gutter="20">
+                  <el-col :span="6"><div style="height:40px;line-height:40px">约定人:</div></el-col>
+                  <el-col :span="18">
+                      <el-input
+                    placeholder="请输入姓名"
+                    v-model="menuList[index].person"
+                    clearable>
+                    </el-input>
+                  </el-col>
+                </el-row>
+
+                <el-row :gutter="20">
+                  <el-col :span="6"><div style="height:40px;line-height:40px">出发地:</div></el-col>
+                  <el-col :span="18">
+                      <el-input
+                        placeholder="请输入出发地"
+                        v-model="menuList[index].position"
+                        clearable>
+                      </el-input>
+                  </el-col>
+                </el-row>
+
+
+                <el-row :gutter="20">
+                  <el-col :span="6"><div style="height:40px;line-height:40px">出发时间:</div></el-col>
+                  <el-col :span="18">
+                    <el-time-picker
+                        v-model="menuList[index].startTime"
+                        placeholder="任意时间点">
+                    </el-time-picker>
+                  </el-col>
+                </el-row>
+                    <!-- 约定人:
                     <el-input
                     placeholder="请输入姓名"
                     v-model="menuList[index].person"
@@ -21,22 +53,15 @@
                     出发时间:
                     <el-time-picker
                         v-model="menuList[index].startTime"
-
                         placeholder="任意时间点">
-                    </el-time-picker>
+                    </el-time-picker> -->
+                    <!-- <el-button type="danger" icon="el-icon-remove-outline" circle @click="delMenu(index)"></el-button> -->
+                    <div style="text-align: right; ">
+                         <i class="el-icon-error" style="font-size: 25px;cursor:pointer" @click="delMenu(index)"></i>
+                    </div>
+                    <!-- <el-button type="primary" icon="el-icon-delete"></el-button> -->
 
-                <!-- <el-menu-item-group>
-                <template slot="title">分组一</template>
-                <el-menu-item index="1-1">选项1</el-menu-item>
-                <el-menu-item index="1-2">选项2</el-menu-item>
-                </el-menu-item-group>
-                <el-menu-item-group title="分组2">
-                <el-menu-item index="1-3">选项3</el-menu-item>
-                </el-menu-item-group>
-                <el-submenu index="1-4">
-                <template slot="title">选项4</template>
-                <el-menu-item index="1-4-1">选项4-1</el-menu-item>
-                </el-submenu> -->
+               
             </el-submenu>
         </div>
 
@@ -70,25 +95,50 @@
             <el-menu-item index="3-4-1">选项4-1</el-menu-item>
             </el-submenu>
         </el-submenu> -->
-        约定起始时间:
+            <el-divider><i class="el-icon-sunrise-1"></i></el-divider>
+        <div>
+
+          <el-row :gutter="20">
+          <el-col :span="10"><div style="height:40px;line-height:40px">约定起始时间::</div></el-col>
+            <el-col :span="18"> 
+              <el-time-picker
+                  v-model="sTime"
+                  placeholder="任意时间点">
+              </el-time-picker>
+            </el-col>
+          </el-row>
+
+
+        <el-row :gutter="20">
+          <el-col :span="10"><div style="height:40px;line-height:40px">约定结束时间::</div></el-col>
+            <el-col :span="18"> 
+              <el-time-picker
+                  v-model="eTime"
+                  placeholder="任意时间点">
+              </el-time-picker>
+            </el-col>
+          </el-row>
+        <!-- 约定起始时间:
         <el-time-picker
-            arrow-control
             v-model="sTime"
             placeholder="任意时间点">
-        </el-time-picker>
+        </el-time-picker> 
         约定终止时间:
         <el-time-picker
-            arrow-control
             v-model="eTime"
             placeholder="任意时间点">
         </el-time-picker>
+        -->
         <br>
-        <el-button type="primary" icon="el-icon-plus" @click="addMenu()"></el-button>
-        <el-button type="primary" icon="el-icon-minus" @click="delMenu()"></el-button>
-        <el-button type="primary" icon="el-icon-minus" @click="handleData()">划区域</el-button>
-        <el-button type="primary" icon="el-icon-minus" @click="bindE()">绑定路线</el-button>
-        <el-button type="primary" icon="el-icon-minus" @click="reomveE()">解除绑定</el-button>
-        <el-button type="primary" icon="el-icon-minus" @click="addRoad()">添加道路</el-button>
+        <div style="text-align:right">
+          <el-button  type="primary" size="small" @click="addMenu()">增加新约定人</el-button>        <br>
+          <!-- <el-button type="primary" icon="el-icon-minus" @click="delMenu()"></el-button> -->
+          <el-button type="primary" size="small"  @click="handleData()">查看可达区域</el-button>        <br>
+          <!-- <el-button type="primary" icon="el-icon-minus" @click="bindE()">绑定路线</el-button>
+          <el-button type="primary" icon="el-icon-minus" @click="reomveE()">解除绑定</el-button> -->
+          <el-button type="primary" size="small"  @click="addRoad()">智能规划道路</el-button>
+        </div>
+        </div>
         </el-menu>
     </el-aside>
     
@@ -105,22 +155,19 @@
         <span>王小虎</span>
         </el-header>
         
-        <el-main>
+        <el-main style="height:750px">
+          <!-- <div class="suggest"> -->
+
             <suggest-head></suggest-head>
             <autocomplete-list></autocomplete-list>
             <div class="map" >
                 <amap ref="amap"></amap>
             </div>  
-            <!-- <amap></amap> -->
-        <!-- <el-table :data="tableData">
-            <el-table-column prop="date" label="日期" width="140">
-            </el-table-column>
-            <el-table-column prop="name" label="姓名" width="120">
-            </el-table-column>
-            <el-table-column prop="address" label="地址">
-            </el-table-column>
-        </el-table> -->
+          <!-- </div> -->
         </el-main>
+        <suggestList></suggestList>
+
+
     </el-container>
     </el-container>
   </div>
@@ -133,6 +180,7 @@
   import amap from '@/components/public/amap.vue'
   import suggestHead from '@/components/suggest/suggestHead.vue'
   import autocompleteList from '@/components/suggest/autocompleteList.vue'
+  import suggestList from '@/components/suggest/suggestList.vue'
   export default {
     computed: {
       ...mapState([
@@ -148,7 +196,8 @@
       suggest,
       amap,
       suggestHead,
-      autocompleteList
+      autocompleteList,
+      suggestList
     },
   
     data() {
@@ -176,7 +225,7 @@
       }
     },
     created(){
-        self = this,
+        // self = this,
         
         console.log(this.position)
         // debugger;
@@ -200,8 +249,10 @@
                 LngLat:[]
           });
       },
-      delMenu(){
-          this.menuList.pop();
+      delMenu(index){
+        if(this.menuList.length>1){
+          this.menuList.splice(index, 1);
+        }
       },
       
 
@@ -209,7 +260,7 @@
 
         let sTimeDiff = parseInt(this.sTime - time) / 1000;
         let eTimeDiff = parseInt(this.eTime - time) / 1000
-        let v = 5;
+        let v = 4;
         console.log(typeof sTimeDiff);
         console.log(typeof v);
         let rs = sTimeDiff*v;
@@ -226,9 +277,10 @@
 
           this.menuList.forEach(menu => {
             let time = this.handleDate(menu.startTime);
-            self.getLngLat(menu);
-            
             //  debugger;
+
+            this.getLngLat(menu);
+            
 
             this.getMarker(menu.person,menu.position,time.rs,time.re);
 
@@ -240,10 +292,11 @@
 
       getLngLat(menu){
         // debugger;
-            AMap.plugin('AMap.Geocoder', function() {
+            AMap.plugin('AMap.Geocoder', ()=> {
             var geocoder = new AMap.Geocoder({
-                // city 指定进行编码查询的城市，支持传入城市名、adcode 和 citycode
-                city: self.position.city
+                // city 指定进行编码查询的城市，支持传入城市名、adcode 和 
+              
+                city: this.position.city
             })
 
             geocoder.getLocation(menu.position, function(status, result) {
@@ -261,13 +314,13 @@
 
 
       getMarker(per,pos,rs,re){
-          AMap.plugin('AMap.Geocoder', function() {
+          AMap.plugin('AMap.Geocoder', ()=> {
             var geocoder = new AMap.Geocoder({
                 // city 指定进行编码查询的城市，支持传入城市名、adcode 和 citycode
-                city: self.position.city
+                city: this.position.city
             })
 
-            geocoder.getLocation(pos, function(status, result) {
+            geocoder.getLocation(pos, (status, result)=> {
                 if (status === 'complete' && result.info === 'OK') {
                 // result中对应详细地理坐标信息
                     // debugger;
@@ -277,7 +330,7 @@
                     });
                     console.log(marker);
                     console.log(result);
-                    self.$refs.amap.addMark(marker,per,rs,re);
+                    this.$refs.amap.addMark(marker,per,rs,re);
                     // self.$refs.amap.addRoad();
 
                 }
@@ -287,16 +340,18 @@
 
 
       bindE(){
-        self.$refs.amap.bindEvent();
+        debugger;
+        // self.$refs.amap.bindEvent();
+        this.$refs.amap.bindEvent();
         // console.log(e.lnglat);
       },
       reomveE(){
-        self.$refs.amap.removeEvent();
+        this.$refs.amap.removeEvent();
       },
 
       addRoad(){
         this.menuList.forEach(menu =>{        
-            self.$refs.amap.addRoad(menu.LngLat);
+            this.$refs.amap.addRoad(menu.LngLat);
         })  
       // self.$refs.amap.testThis();
 
@@ -305,13 +360,13 @@
 
 
       mapCode(){
-        AMap.plugin('AMap.Geocoder', function() {
+        AMap.plugin('AMap.Geocoder', ()=> {
         var geocoder = new AMap.Geocoder({
             // city 指定进行编码查询的城市，支持传入城市名、adcode 和 citycode
             city: '010'
         })
 
-        geocoder.getLocation('东北大学', function(status, result) {
+        geocoder.getLocation('东北大学', (status, result)=> {
             if (status === 'complete' && result.info === 'OK') {
             // result中对应详细地理坐标信息
                     console.log(result);
@@ -321,7 +376,7 @@
                         title: '东北大学'
                     });
                     // console.log(self.$refs);
-                    self.$refs.amap.addMark(marker);
+                    this.$refs.amap.addMark(marker);
                     // self.$refs.amap.map.addMark();
             }
         })
@@ -356,7 +411,8 @@
   height: 85%;
   width: 76%;
   position: absolute;
-  z-index: 800;
+  /* z-index: 800; */
   /*background-color: green;*/
   }
+  
 </style>
