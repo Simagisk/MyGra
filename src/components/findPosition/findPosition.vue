@@ -1,6 +1,6 @@
 <template>
   <div class="position-page">
-    <el-container style="height: 500px; border: 1px solid #eee">
+    <el-container style="height: 800px; border: 1px solid #eee">
     <el-aside width="300px" style="background-color: rgb(238, 241, 246);height:750px">
         <el-menu :unique-opened='false'>
         <div v-for="(item,index) in menuList" :key="index+''">
@@ -64,57 +64,39 @@
                
             </el-submenu>
         </div>
-
-        <!-- <el-submenu index="2">
-            <template slot="title"><i class="el-icon-menu"></i>导航二</template>
-            <el-menu-item-group>
-            <template slot="title">分组一</template>
-            <el-menu-item index="2-1">选项1</el-menu-item>
-            <el-menu-item index="2-2">选项2</el-menu-item>
-            </el-menu-item-group>
-            <el-menu-item-group title="分组2">
-            <el-menu-item index="2-3">选项3</el-menu-item>
-            </el-menu-item-group>
-            <el-submenu index="2-4">
-            <template slot="title">选项4</template>
-            <el-menu-item index="2-4-1">选项4-1</el-menu-item>
-            </el-submenu>
-        </el-submenu>
-        <el-submenu index="3">
-            <template slot="title"><i class="el-icon-setting"></i>导航三</template>
-            <el-menu-item-group>
-            <template slot="title">分组一</template>
-            <el-menu-item index="3-1">选项1</el-menu-item>
-            <el-menu-item index="3-2">选项2</el-menu-item>
-            </el-menu-item-group>
-            <el-menu-item-group title="分组2">
-            <el-menu-item index="3-3">选项3</el-menu-item>
-            </el-menu-item-group>
-            <el-submenu index="3-4">
-            <template slot="title">选项4</template>
-            <el-menu-item index="3-4-1">选项4-1</el-menu-item>
-            </el-submenu>
-        </el-submenu> -->
             <el-divider><i class="el-icon-sunrise-1"></i></el-divider>
         <div>
 
           <el-row :gutter="20">
-          <el-col :span="10"><div style="height:40px;line-height:40px">约定起始时间::</div></el-col>
+          <el-col :span="10"><div style="height:40px;line-height:40px">约定时间范围:</div></el-col>
             <el-col :span="18"> 
-              <el-time-picker
+              <!-- <el-time-picker
                   v-model="sTime"
                   placeholder="任意时间点">
-              </el-time-picker>
+              </el-time-picker> -->
             </el-col>
           </el-row>
 
 
-        <el-row :gutter="20">
-          <el-col :span="10"><div style="height:40px;line-height:40px">约定结束时间::</div></el-col>
-            <el-col :span="18"> 
+        <el-row :gutter="2">
+          <!-- <el-col :span="10"><div style="height:40px;line-height:40px">约定结束时间:</div></el-col> -->
+            <el-col :span="10"> 
               <el-time-picker
+              style="width:120px"
                   v-model="eTime"
-                  placeholder="任意时间点">
+                  placeholder="起始时间">
+              </el-time-picker>
+            </el-col>
+            <el-col :span="3" style="line-height:40px">至</el-col>
+            <!-- </el-row>
+            <el-row > 至 </el-row>
+          <el-row> -->
+            <el-col :span="10"> 
+              <el-time-picker
+              style="width:120px"
+                  v-model="eTime"
+                  minTime: startTime
+                  placeholder="结束时间">
               </el-time-picker>
             </el-col>
           </el-row>
@@ -129,15 +111,18 @@
             placeholder="任意时间点">
         </el-time-picker>
         -->
-        <br>
-        <div style="text-align:right">
-          <el-button  type="primary" size="small" @click="addMenu()">增加新约定人</el-button>        <br>
+        
+      <el-row style="margin-top:20px">
+          <el-button  type="success" size="small" @click="addMenu()">增加新约定人</el-button>        
           <!-- <el-button type="primary" icon="el-icon-minus" @click="delMenu()"></el-button> -->
-          <el-button type="primary" size="small"  @click="handleData()">查看可达区域</el-button>        <br>
+          <el-button type="info" size="small"  @click="handleData()">查看可达区域</el-button>  
+      </el-row>
+      <el-row style="margin-top:20px">          
+          <el-button type="danger" size="small"  @click="reView()">重新查看区域</el-button>        
           <!-- <el-button type="primary" icon="el-icon-minus" @click="bindE()">绑定路线</el-button>
           <el-button type="primary" icon="el-icon-minus" @click="reomveE()">解除绑定</el-button> -->
           <el-button type="primary" size="small"  @click="addRoad()">智能规划道路</el-button>
-        </div>
+      </el-row>  
         </div>
         </el-menu>
     </el-aside>
@@ -210,6 +195,7 @@
         selfLngLat:[],
         tableData: Array(20).fill(item),
         sTime: new Date(2018, 9, 10, 0, 0),
+        // sTime:'',
         eTime: new Date(2018, 9, 10, 0, 0),
         menuList:[
             {
@@ -338,6 +324,10 @@
         })
       },
 
+      reView(){
+          this.$refs.amap.removeMark();
+      },
+
 
       bindE(){
         debugger;
@@ -414,5 +404,9 @@
   /* z-index: 800; */
   /*background-color: green;*/
   }
+
+  /* .button-group{
+
+  } */
   
 </style>

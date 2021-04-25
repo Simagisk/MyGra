@@ -161,6 +161,10 @@ export default {
     },
 
 
+    removeMark(){
+      this.map.clearMap();
+    },
+
 
     //添加图标
     addMark(marker,per,rs,re){
