@@ -93,8 +93,8 @@
     transform: scale(1.14);*/
     color: #fc9153;
   }
-
+/* 
   .navigator .nav-wrapper .tab-wrapper .tab-list .tab-item .tab-name.link-unactive {
 
-  }
+  } */
 </style>

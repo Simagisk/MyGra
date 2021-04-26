@@ -129,15 +129,16 @@
     
     <el-container>
         <el-header style="text-align: right; font-size: 12px">
-        <el-dropdown>
+          {{title}}
+        <el-dropdown  @command = "handleCommand">
             <i class="el-icon-setting" style="margin-right: 15px"></i>
             <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>查看</el-dropdown-item>
-            <el-dropdown-item>新增</el-dropdown-item>
-            <el-dropdown-item>删除</el-dropdown-item>
+            <el-dropdown-item command='驾车'>驾车</el-dropdown-item>
+            <el-dropdown-item command='步行'> 步行</el-dropdown-item>
+            <el-dropdown-item command='骑行'>骑行</el-dropdown-item>
             </el-dropdown-menu>
         </el-dropdown>
-        <span>王小虎</span>
+        <span>切换行动方式</span>
         </el-header>
         
         <el-main style="height:750px">
@@ -171,8 +172,10 @@
       ...mapState([
         'position',
         'islogined',
-        'address',
-        
+        'address'
+      ]),
+      ...mapActions([
+        'get_telephone'
       ])
     },
     components: {
@@ -192,6 +195,7 @@
         address: '上海市普陀区金沙江路 1518 弄'
       };
       return {
+        title:'驾车',
         selfLngLat:[],
         tableData: Array(20).fill(item),
         sTime: new Date(2018, 9, 10, 0, 0),
@@ -212,10 +216,12 @@
     },
     created(){
         // self = this,
-        
         console.log(this.position)
         // debugger;
         // this.getMarker()
+    },
+    mounted(){
+        // this.get_telephone();
     },
     methods: {
       order () {
@@ -241,6 +247,11 @@
         }
       },
       
+
+      handleCommand(command){
+          this.title = command;
+          console.log(command);
+      },
 
       handleDate(time){
 
@@ -340,8 +351,18 @@
       },
 
       addRoad(){
-        this.menuList.forEach(menu =>{        
+        this.menuList.forEach(menu =>{  
+          if(this.title == '驾车'){
             this.$refs.amap.addRoad(menu.LngLat);
+          }
+          if(this.title == '步行'){
+            this.$refs.amap.addWalkRoad(menu.LngLat);
+          }
+          if(this.title == '骑行'){
+            this.$refs.amap.addRideRoad(menu.LngLat);
+          }
+          
+
         })  
       // self.$refs.amap.testThis();
 
