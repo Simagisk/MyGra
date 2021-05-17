@@ -11,6 +11,7 @@ import VueAxios from 'vue-axios'
 import AMap from 'vue-amap';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+import { Message } from 'element-ui';
 
 Vue.use(VueAxios, axios);
 Vue.use(ElementUI);

@@ -209,6 +209,14 @@
                 endTime:'',
                 LngLat:[]
 
+            },
+                        {
+                person:'',
+                position:'',
+                startTime:new Date(2018, 9, 10, 0, 0),
+                endTime:'',
+                LngLat:[]
+
             }
         ]
 
@@ -242,8 +250,10 @@
           });
       },
       delMenu(index){
-        if(this.menuList.length>1){
+        if(this.menuList.length>2){
           this.menuList.splice(index, 1);
+        }else{
+          this.$message.error("删除失败,约定人数至少为两人");
         }
       },
       
@@ -257,9 +267,17 @@
 
         let sTimeDiff = parseInt(this.sTime - time) / 1000;
         let eTimeDiff = parseInt(this.eTime - time) / 1000
-        let v = 4;
-        console.log(typeof sTimeDiff);
-        console.log(typeof v);
+        let v = 0;
+        if(this.title == '驾车'){
+           v = 3.854823;
+        }
+        if(this.title == '步行'){
+           v = 0.7851325;
+        }
+        if(this.title == '骑行'){
+           v = 1.8165321;
+        }
+
         let rs = sTimeDiff*v;
         let re = eTimeDiff*v;       
         return {rs,re};
